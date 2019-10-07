@@ -7,7 +7,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const User = require('./models/user');
 
-const MONGODB_URI = 'mongodb://localhost:27017/assignment';
+const MONGODB_URI = 'mongodb+srv://yashi:yashi1234@assessment-kxcep.mongodb.net/assignment';
 
 const app = express();
 const store = new MongoDBStore({
