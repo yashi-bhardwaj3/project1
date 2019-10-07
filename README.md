@@ -1,0 +1,2 @@
+# wns-assessment
+Assessment task
