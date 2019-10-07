@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const compression = require('compression');
 const User = require('./models/user');
 
 const MONGODB_URI = 'mongodb+srv://yashi:yashi1234@assessment-kxcep.mongodb.net/assignment';
@@ -18,10 +19,12 @@ const store = new MongoDBStore({
 const authRoutes = require('./routes/auth');
 const chartRoutes = require('./routes/chart');
 
+app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); 
 
 app.use((req, res, next) => {
+    console.log(req.url);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
@@ -55,7 +58,8 @@ app.use(chartRoutes);
 mongoose
     .connect(MONGODB_URI)
     .then(result => {
-        app.listen(3000);
+        app.listen(process.env.port || 3000);
+        console.log(`app connect at ${process.env.port}`)
     })
     .catch(err => {
         console.log(err);
